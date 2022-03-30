@@ -107,12 +107,13 @@ public:
 
 	// Возвращает ссылку на элемент с индексом index
 	Type& operator[](size_t index) noexcept {
+		assert(index < size_);
 		return *(items_.Get() + index);
 	}
 
 	// Возвращает константную ссылку на элемент с индексом index
 	const Type& operator[](size_t index) const noexcept {
-		// Напишите тело самостоятельно
+		assert(index < size_);
 		return *(items_.Get() + index);
 	}
 
@@ -188,7 +189,7 @@ public:
 	}
 	
 	Iterator Insert(ConstIterator position, const Type& value) {
-		assert(position >= begin() && position < end());
+		assert(position >= begin() && position <= end());
 		if (size_ != capacity_) {
 			std::copy_backward(const_cast<Iterator>(position), end(), end() + 1);
 			items_[position - items_.Get()] = value;
@@ -209,6 +210,7 @@ public:
 		}
 	}
 	Iterator Insert(ConstIterator position, Type&& value) {
+		assert(position >= begin() && position <= end());
 		if (size_ != capacity_) {
 			std::move_backward(const_cast<Iterator>(position), end(), end() + 1);
 			items_[position - items_.Get()] = std::move(value);
@@ -230,7 +232,9 @@ public:
 	}
 
 	void PopBack() noexcept {
-		Resize(size_ - 1);
+		if (!IsEmpty()) {
+			Resize(size_ - 1);
+		}
 	}
 
 	Iterator Erase(ConstIterator position) {
