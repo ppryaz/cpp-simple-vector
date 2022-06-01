@@ -49,6 +49,6 @@
  
  ## Как использовать?
  - Поместите в папку вашего проекта файлы array_ptr.h, simple_vector.h из репозитория
- - Подключите в ваш файл SimpleVector  через директиву #include "simple_vectop.h"
+ - Подключите в ваш файл SimpleVector  через директиву #include "simple_vector.h"
  - Пользуйтесь :)))
  
